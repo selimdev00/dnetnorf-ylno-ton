@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import useStore from "@/store/useStore";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -9,11 +10,13 @@ const Wrapper = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const Circle = () => {
-  let activeDotIndex = -1;
-  let numDots = 5;
+const Circle: React.FC = () => {
+  const { sections, activeSection } = useStore();
 
-  const svg = useRef(null);
+  let activeDotIndex: number = -1;
+  let numDots: number = sections.length;
+
+  const svg = useRef<SVGSVGElement | null>(null);
 
   const svgNS = "http://www.w3.org/2000/svg";
   const circleCenterX = 265;
@@ -36,26 +39,26 @@ const Circle = () => {
       const y = circleCenterY + radius * Math.sin(angle);
 
       const dot = document.createElementNS(svgNS, "circle");
-      dot.setAttribute("cx", x);
-      dot.setAttribute("cy", y);
-      dot.setAttribute("r", dotRadius);
+      dot.setAttribute("cx", x.toString());
+      dot.setAttribute("cy", y.toString());
+      dot.setAttribute("r", dotRadius.toString());
       dot.setAttribute("fill", i === activeDotIndex ? "none" : "#42567A");
       dot.setAttribute("stroke", i === activeDotIndex ? "#42567A" : "none");
       dot.setAttribute("stroke-width", i === activeDotIndex ? "1" : "0");
       dot.setAttribute("class", "dot");
-      svg.current.appendChild(dot);
+      svg.current?.appendChild(dot);
 
       // Add index inside active dot
       if (i === activeDotIndex) {
         const text = document.createElementNS(svgNS, "text");
-        text.setAttribute("x", x);
-        text.setAttribute("y", y + 4); // Adjust for centering
+        text.setAttribute("x", x.toString());
+        text.setAttribute("y", (y + 4).toString()); // Adjust for centering
         text.setAttribute("text-anchor", "middle");
         text.setAttribute("font-size", "14");
-        dot.setAttribute("r", dotRadius * 4);
+        dot.setAttribute("r", (dotRadius * 4).toString());
         text.setAttribute("fill", "#42567A");
-        text.textContent = i + 1;
-        svg.current.appendChild(text);
+        text.textContent = (i + 1).toString();
+        svg.current?.appendChild(text);
       }
 
       gsap.fromTo(
@@ -87,7 +90,7 @@ const Circle = () => {
     }
   }
 
-  function setActiveDot(index) {
+  function setActiveDot(index: number) {
     activeDotIndex = index;
     drawDots();
   }
