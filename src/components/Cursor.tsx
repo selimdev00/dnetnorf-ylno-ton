@@ -31,11 +31,11 @@ const CursorElement = styled.div`
 const Cursor = ({ children }: { children: React.ReactNode }): React.FC => {
   const cursorElement = useRef<HTMLDivElement | null>(null);
 
-  const showCursorElement = () => {
+  const showCursorElement = (): void => {
     cursorElement.current.style.scale = "1";
   };
 
-  const hideCursorElement = () => {
+  const hideCursorElement = (): void => {
     cursorElement.current.style.scale = "0";
   };
 
@@ -54,7 +54,7 @@ const Cursor = ({ children }: { children: React.ReactNode }): React.FC => {
     }
   };
 
-  const onMouseUp = () => {
+  const onMouseUp = (): void => {
     hideCursorElement();
   };
 
@@ -63,7 +63,7 @@ const Cursor = ({ children }: { children: React.ReactNode }): React.FC => {
     document.addEventListener("mouseup", onMouseUp, true);
     document.addEventListener("mousemove", onMouseMove, true);
 
-    const slider = document.querySelector(".swiper");
+    const slider = document.querySelector(".swiper") as HTMLDivElement;
 
     if (slider) {
       slider.addEventListener("mousedown", onMousedown, true);

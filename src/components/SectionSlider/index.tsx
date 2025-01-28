@@ -4,6 +4,8 @@ import styled from "styled-components";
 import useStore from "@/store/useStore";
 import SectionSliderButtons from "@/components/SectionSlider/SectionSliderButtons";
 
+import breakpoints from "@/utils/breakpoints";
+
 const SectionPage = styled.div`
   font-size: 14px;
   font-weight: 400;
@@ -18,6 +20,13 @@ const SectionWrapper = styled.div`
   flex-direction: column;
   gap: 4px;
   padding: 0 80px;
+
+  @media (max-width: ${breakpoints.sm}px) {
+    padding: 0;
+    margin-top: 10px;
+    position: absolute;
+    bottom: -25px;
+  }
 `;
 
 const displayNumber = (num: number): string => {

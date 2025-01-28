@@ -45,8 +45,8 @@ const Years = () => {
 
   const { startYear, endYear } = sections[activeSection];
 
-  const startYearMemo = useRef(startYear);
-  const endYearMemo = useRef(endYear);
+  const startYearMemo = useRef<number>(startYear);
+  const endYearMemo = useRef<number>(endYear);
 
   useGSAP(
     () => {

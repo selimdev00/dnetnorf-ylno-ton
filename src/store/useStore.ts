@@ -150,7 +150,7 @@ const useStore = create<StoreState>((set, get) => ({
       ],
     },
   ],
-  setActiveSection: (index: number) => {
+  setActiveSection: (index: number): void => {
     if (index < 0) return;
     if (index >= get().sections.length) return;
     set({ activeSection: index });

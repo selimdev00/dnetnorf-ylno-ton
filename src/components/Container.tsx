@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import breakpoints from "@/utils/breakpoints";
 
-const Container = styled.div`
+const ContainerWrapper = styled.div`
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
@@ -64,15 +64,17 @@ const ContainerLine = styled.div<{
   }}
 `;
 
-export default ({ children }) => {
+const Container = ({ children }: { children: React.ReactNode }): React.FC => {
   return (
-    <Container>
+    <ContainerWrapper>
       <ContainerLine $position="left" />
       <ContainerLine $position="right" />
       <ContainerLine $position="center-horizontal" />
       <ContainerLine $position="center-vertical" />
 
       {children}
-    </Container>
+    </ContainerWrapper>
   );
 };
+
+export default Container;

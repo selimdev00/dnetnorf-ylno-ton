@@ -50,10 +50,22 @@ const Title = styled.div`
   text-align: start;
 `;
 
-const Dot = ({ children, topic, onClick, isActive = false }): React.FC => {
-  const container = useRef(null);
+interface DotProps {
+  children: React.ReactNode;
+  topic: string;
+  onClick: () => void;
+  isActive?: boolean;
+}
 
-  const [isHovered, setIsHovered] = useState(false);
+const Dot = ({
+  children,
+  topic,
+  onClick,
+  isActive = false,
+}: DotProps): React.FC => {
+  const container = useRef<HTMLDivElement | null>(null);
+
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   useGSAP(
     () => {

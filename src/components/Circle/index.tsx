@@ -16,7 +16,6 @@ const calculateDotPosition = (
   const angle: number = ((2 * Math.PI) / total) * index + angleOffset;
   const x: number = radius + radius * Math.cos(angle);
   const y: number = radius + radius * Math.sin(angle);
-
   return { x, y };
 };
 
@@ -69,15 +68,13 @@ const Index = (): React.FC => {
         );
 
         gsap.set(`.dot-${index}`, { x, y });
-        const clickedAngle: number = ((2 * Math.PI) / totalDots) * 0;
-        const rotateBy = startAngle - clickedAngle;
 
         gsap.set(circle.current, {
-          rotation: calculateRadToDeg(rotateBy),
+          rotation: calculateRadToDeg(startAngle),
         });
 
         dots.forEach((_, dotIndex) => {
-          const angleOffset: number = -calculateRadToDeg(rotateBy);
+          const angleOffset: number = -calculateRadToDeg(startAngle);
 
           gsap.set(`.dot-${dotIndex}`, {
             rotation: angleOffset,
@@ -88,7 +85,7 @@ const Index = (): React.FC => {
     { scope: container },
   );
 
-  const handleDotClick = contextSafe((index: number) => {
+  const handleDotClick = contextSafe((index: number): void => {
     const clickedAngle: number = ((2 * Math.PI) / totalDots) * index;
     const rotateBy: number = startAngle - clickedAngle;
     const degrees: number = calculateRadToDeg(rotateBy);

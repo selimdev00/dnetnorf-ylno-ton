@@ -9,12 +9,12 @@ import breakpoints from "@/utils/breakpoints";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import { EventItem } from "@/types";
+import { EventItem, SectionItem } from "@/types";
 import useStore from "@/store/useStore";
 import EventSliderButtonNext from "@/components/EventSlider/EventSliderButtonNext";
 import EventSliderButtonPrev from "@/components/EventSlider/EventSliderButtonPrev";
-import SectionSliderButtons from "@/components/SectionSlider/SectionSliderButtons";
 import SectionSlider from "@/components/SectionSlider";
+import useWindowSize from "@/utils/useWindowSize";
 
 const Event = styled.div`
   display: flex;
@@ -54,16 +54,8 @@ const EventSliderWrapper = styled.div`
 
   @media (max-width: ${breakpoints.sm}px) {
     padding: 0 20px;
+    margin-top: 56px;
   }
-`;
-
-const PaginationBullet = styled.div`
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: var(--black-blue);
-  opacity: 0.5;
-  transition: opacity 0.3s ease-in-out;
 `;
 
 const EventSlider: React.FC = () => {
@@ -72,7 +64,7 @@ const EventSlider: React.FC = () => {
   const prevRef = useRef<HTMLButtonElement | null>(null);
   const nextRef = useRef<HTMLButtonElement | null>(null);
 
-  const container = useRef(null);
+  const container = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     gsap.set(container.current, { opacity: 0, y: 20 });
@@ -92,12 +84,16 @@ const EventSlider: React.FC = () => {
     { dependencies: [activeSection] },
   );
 
-  const [events, setEvents] = useState(sections[activeSection].events);
+  const [events, setEvents] = useState<SectionItem>(
+    sections[activeSection].events,
+  );
+
+  const { width } = useWindowSize();
 
   return (
     <EventSliderWrapper ref={container}>
-      <EventSliderButtonPrev ref={prevRef} />
-      <EventSliderButtonNext ref={nextRef} />
+      {width > breakpoints.sm && <EventSliderButtonPrev ref={prevRef} />}
+      {width > breakpoints.sm && <EventSliderButtonNext ref={nextRef} />}
 
       <style jsx="true">{`
         .swiper-button-disabled {
@@ -157,13 +153,17 @@ const EventSlider: React.FC = () => {
             spaceBetween: 70,
           },
         }}
-        pagination={{
-          clickable: true,
-          bulletClass: "swiper-pagination-bullet",
-          renderBullet: (index, className) => {
-            return `<span class="${className}"></span>`;
-          },
-        }}
+        pagination={
+          width < breakpoints.sm
+            ? {
+                clickable: true,
+                bulletClass: "swiper-pagination-bullet",
+                renderBullet: (index, className) => {
+                  return `<span class="${className}"></span>`;
+                },
+              }
+            : false
+        }
       >
         {events.map((item, index) => (
           <SwiperSlide key={index}>
@@ -175,7 +175,7 @@ const EventSlider: React.FC = () => {
         ))}
       </Swiper>
 
-      <SectionSlider />
+      {width < breakpoints.sm && <SectionSlider />}
     </EventSliderWrapper>
   );
 };
