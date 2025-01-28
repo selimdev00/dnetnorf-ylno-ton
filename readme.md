@@ -3,6 +3,10 @@
 
 Test project using react.js (ts), gsap, zustand & webpack
 
+## Demo
+
+https://dnetnorf-ylno-ton.vercel.app/
+
 
 ## Run Locally
 
