@@ -1,35 +1,23 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import styled from "styled-components";
 
-import EventSliderButtonPrev from "@/components/EventSlider/EventSliderButtonPrev";
-import EventSliderButtonNext from "@/components/EventSlider/EventSliderButtonNext";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+
 import { EventItem } from "@/types";
 import useStore from "@/store/useStore";
-
-const EventPage = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 18.13px;
-  text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-`;
-
-const EventSliderButtons = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0 60px 0;
-`;
+import EventSliderButtonNext from "@/components/EventSlider/EventSliderButtonNext";
+import EventSliderButtonPrev from "@/components/EventSlider/EventSliderButtonPrev";
 
 const Event = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  cursor: default;
 `;
 
 const EventYear = styled.div`
@@ -61,17 +49,42 @@ const EventSliderWrapper = styled.div`
 const EventSlider: React.FC = () => {
   const { sections, activeSection }: { events: EventItem[] } = useStore();
 
-  const prevRef = useRef<SVGSVGElement | null>(null);
-  const nextRef = useRef<SVGSVGElement | null>(null);
+  const prevRef = useRef<HTMLButtonElement | null>(null);
+  const nextRef = useRef<HTMLButtonElement | null>(null);
+
+  const container = useRef(null);
+
+  useGSAP(() => {
+    gsap.set(container.current, { opacity: 0, y: 20 });
+  });
+
+  useGSAP(
+    () => {
+      gsap.to(container.current, {
+        opacity: 0,
+        duration: 0.3,
+        onComplete: () => setEvents(sections[activeSection].events),
+      });
+
+      gsap.set(container.current, { opacity: 0, y: 20, delay: 0.5 });
+      gsap.to(container.current, { opacity: 1, y: 0, delay: 1 });
+    },
+    { dependencies: [activeSection] },
+  );
+
+  const [events, setEvents] = useState(sections[activeSection].events);
 
   return (
-    <EventSliderWrapper>
-      <EventPage>02/06</EventPage>
+    <EventSliderWrapper ref={container}>
+      <EventSliderButtonPrev ref={prevRef} />
+      <EventSliderButtonNext ref={nextRef} />
 
-      <EventSliderButtons>
-        <EventSliderButtonPrev ref={prevRef} />
-        <EventSliderButtonNext ref={nextRef} />
-      </EventSliderButtons>
+      <style jsx="true">{`
+        .swiper-button-disabled {
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+      `}</style>
 
       <Swiper
         modules={[Navigation]}
@@ -87,8 +100,9 @@ const EventSlider: React.FC = () => {
           swiper.navigation.init();
           swiper.navigation.update();
         }}
+        touchStartPreventDefault={false}
       >
-        {sections[activeSection].events.map((item, index) => (
+        {events.map((item, index) => (
           <SwiperSlide key={index} style={{ width: "340px" }}>
             <Event>
               <EventYear>{item.year}</EventYear>

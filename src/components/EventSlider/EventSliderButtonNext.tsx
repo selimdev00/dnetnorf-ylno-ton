@@ -1,29 +1,23 @@
 import React, { forwardRef } from "react";
+import EventSliderButton from "@/components/EventSlider/EventSliderButton";
 
-const EventSliderButtonPrev: React.FC = (
-  props: React.ComponentPropsWithoutRef<"svg">,
-  ref: React.Ref<SVGSVGElement>,
+const SectionSliderButtonPrev: React.FC = (
+  props: React.ComponentPropsWithoutRef<"button">,
+  ref: React.Ref<HTMLButtonElement>,
 ) => {
   return (
-    <svg
-      {...props}
-      ref={ref}
-      width="50"
-      height="50"
-      viewBox="0 0 50 50"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g>
-        <circle cx="25" cy="25" r="24.5" stroke="#42567A" strokeOpacity="0.5" />
-        <path
-          d="M22.5001 18.75L28.7501 25L22.5001 31.25"
-          stroke="#42567A"
-          strokeWidth="2"
-        />
-      </g>
-    </svg>
+    <EventSliderButton {...props} ref={ref} $type="next">
+      <svg
+        width="8"
+        height="12"
+        viewBox="0 0 8 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M1 1L6 6L1 11" stroke="#3877EE" strokeWidth="2" />
+      </svg>
+    </EventSliderButton>
   );
 };
 
-export default forwardRef<SVGSVGElement>(EventSliderButtonPrev);
+export default forwardRef<HTMLButtonElement>(SectionSliderButtonPrev);

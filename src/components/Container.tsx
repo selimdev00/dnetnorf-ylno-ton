@@ -4,20 +4,18 @@ import styled from "styled-components";
 const Container = styled.div`
   max-width: 1440px;
   margin: 0 auto;
-  min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 40px;
+  padding-bottom: 240px;
+  min-height: 100vh;
 `;
 
 const ContainerLine = styled.div<{
   $position: "left" | "right" | "center-horizontal" | "center-vertical";
 }>`
   position: absolute;
-  background-color: var(--black-blue);
-  opacity: 0.1;
+  background-color: var(--line-color);
 
   ${(props) => {
     const weight = "1px";

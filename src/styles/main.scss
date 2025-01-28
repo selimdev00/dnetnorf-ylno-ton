@@ -5,6 +5,12 @@
   --black-blue: #42567a;
   --fuschia-100: #ef5da8;
   --iris-100: #5d5fef;
+  --line-color: rgba(66, 86, 122, 0.2);
+
+  --xl: 1440px;
+  --l: 1024px;
+  --m: 768px;
+  --s: 375px;
 }
 
 * {
@@ -20,4 +26,9 @@ html {
 body {
   font-family: "PT Sans", sans-serif;
   background-color: var(--white);
+}
+
+button {
+  border: 0;
+  background: unset;
 }
