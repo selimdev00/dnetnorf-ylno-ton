@@ -1,7 +1,14 @@
 
 # Not only frontend
 
-Test project using react.js (ts), gsap, zustand & webpack
+Test project using:
+- react.js ✅
+- typescript ✅
+- gsap ✅
+- zustand ✅
+- webpack ✅
+- styled-components ✅
+- swiper ✅
 
 ## Demo
 
