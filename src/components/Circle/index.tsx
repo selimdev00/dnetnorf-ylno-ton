@@ -5,6 +5,8 @@ import useStore from "@/store/useStore";
 import styled from "styled-components";
 import Dot from "@/components/Circle/Dot";
 
+import breakpoints from "@/utils/breakpoints";
+
 const calculateDotPosition = (
   radius: number,
   index: number,
@@ -27,6 +29,10 @@ const CircleWrapper = styled.div`
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   z-index: 10;
+
+  @media (max-width: ${breakpoints.sm}px) {
+    display: none;
+  }
 `;
 
 const CircleInner = styled.div`

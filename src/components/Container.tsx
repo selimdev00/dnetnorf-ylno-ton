@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import breakpoints from "@/utils/breakpoints";
 
 const Container = styled.div`
   max-width: 1440px;
@@ -9,6 +10,11 @@ const Container = styled.div`
   flex-direction: column;
   padding-bottom: 240px;
   min-height: 100vh;
+  overflow: hidden;
+
+  @media (max-width: ${breakpoints.sm}px) {
+    min-height: unset;
+  }
 `;
 
 const ContainerLine = styled.div<{
@@ -16,6 +22,10 @@ const ContainerLine = styled.div<{
 }>`
   position: absolute;
   background-color: var(--line-color);
+
+  @media (max-width: ${breakpoints.sm}px) {
+    display: none;
+  }
 
   ${(props) => {
     const weight = "1px";

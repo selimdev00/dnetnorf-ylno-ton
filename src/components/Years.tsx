@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import useStore from "@/store/useStore";
 import styled from "styled-components";
+import breakpoints from "@/utils/breakpoints";
 
 const YearsWrapper = styled.div`
   display: flex;
@@ -12,11 +13,23 @@ const YearsWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   gap: 90px;
+
+  @media (max-width: ${breakpoints.sm}px) {
+    position: relative;
+    transform: unset;
+    top: unset;
+    left: unset;
+    padding: 0 20px;
+    gap: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
 `;
 
 const YearItem = styled.div<{ $color: string }>`
   color: var(--${(props) => props.$color});
-  font-size: 200px;
+  font-size: clamp(56px, 15vw, 200px);
   font-weight: 700;
   line-height: 160px;
   letter-spacing: -0.02em;
